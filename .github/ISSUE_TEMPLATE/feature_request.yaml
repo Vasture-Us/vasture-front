@@ -1,0 +1,42 @@
+name: 🐊 New Feature
+description: 新機能を追加する
+labels: ["new feature"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        新機能を追加するにあたって、以下を記入してね！
+
+  - type: textarea
+    id: feature
+    attributes:
+      label: 🏷️ 追加する機能の詳細
+      description: この機能について詳細を書いてね〜
+      placeholder: 例）HomeScreenのUIを作成する
+    validations:
+      required: true
+
+  - type: textarea
+    id: todo
+    attributes:
+      label: 📋 追加するためにやること
+      description: 機能の実装のために必要なやること
+      placeholder: "- [ ] Figmaを参考にUIを作成"
+    validations:
+      required: true
+
+  - type: textarea
+    id: image
+    attributes:
+      label: 📸 画像など
+      description: スクリーンショットや参考資料などがあれば追加してください
+    validations:
+      required: false
+
+  - type: textarea
+    id: comment
+    attributes:
+      label: 🦄 その他のコメント
+      description: 伝えたいことなどあれば！どぞ〜！
+    validations:
+      required: false
