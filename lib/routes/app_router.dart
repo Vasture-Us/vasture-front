@@ -3,6 +3,10 @@ import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:vasture/presentation/providers/tutorial_provider.dart';
+import 'package:vasture/presentation/providers/user_provider.dart';
+import 'package:vasture/presentation/screens/camera/camera_screen.dart';
+import 'package:vasture/presentation/screens/introduction/introduction_screen.dart';
 
 import 'package:vasture/routes/routes.dart';
 import 'package:vasture/presentation/components/navigation_bar/app_navigation_bar.dart';
@@ -11,6 +15,7 @@ import 'package:vasture/presentation/screens/weather/weather_screen.dart';
 
 part 'branch/weather_branch.dart';
 part 'branch/weather_book_branch.dart';
+part 'routers/introduction_router.dart';
 part 'app_router.g.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -22,14 +27,21 @@ GoRouter goRouter(Ref ref) {
     navigatorKey: rootNavigatorKey,
     routes: $appRoutes,
     debugLogDiagnostics: kDebugMode,
-    redirect: (context, state) {
-      // TODO: userIdがなかったらIntroductionScreenに遷移する
-      return null;
+    redirect: (context, state) async {
+      final tutorialState = ref.read(tutorialProvider);
+      final userState = ref.read(userProvider);
+
+      // NOTE チュートリアルが終わっていて、ユーザーが存在するとWeatherScreenへ！
+      if (tutorialState.isCompleted && userState.user != null) {
+        return AppRoutes.weather;
+      } else {
+        return AppRoutes.introduction;
+      }
     },
   );
 }
 
-// BottomNavigationBarになる際の画面を定義する
+// NOTE BottomNavigationBarのアイテムの画面を定義する
 @TypedStatefulShellRoute<MainShellRouteData>(
   branches: <TypedStatefulShellBranch<StatefulShellBranchData>>[
     weatherStatefulShellBranch,
@@ -37,7 +49,6 @@ GoRouter goRouter(Ref ref) {
   ],
 )
 
-// BottomNavigationBarを表示する
 class MainShellRouteData extends StatefulShellRouteData {
   const MainShellRouteData();
 

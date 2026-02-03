@@ -8,6 +8,7 @@ part of 'app_router.dart';
 
 List<RouteBase> get $appRoutes => [
       $mainShellRouteData,
+      $introductionScreenRoute,
     ];
 
 RouteBase get $mainShellRouteData => StatefulShellRouteData.$route(
@@ -83,11 +84,69 @@ mixin _$WeatherBookScreenRoute on GoRouteData {
   void replace(BuildContext context) => context.replace(location);
 }
 
+RouteBase get $introductionScreenRoute => GoRouteData.$route(
+      path: '/introduction',
+      factory: _$IntroductionScreenRoute._fromState,
+      routes: [
+        GoRouteData.$route(
+          path: '/camera',
+          parentNavigatorKey: CameraScreenRoute.$parentNavigatorKey,
+          factory: _$CameraScreenRoute._fromState,
+        ),
+      ],
+    );
+
+mixin _$IntroductionScreenRoute on GoRouteData {
+  static IntroductionScreenRoute _fromState(GoRouterState state) =>
+      const IntroductionScreenRoute();
+
+  @override
+  String get location => GoRouteData.$location(
+        '/introduction',
+      );
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin _$CameraScreenRoute on GoRouteData {
+  static CameraScreenRoute _fromState(GoRouterState state) =>
+      const CameraScreenRoute();
+
+  @override
+  String get location => GoRouteData.$location(
+        '/camera',
+      );
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$goRouterHash() => r'45fc27c88e62138b66a15d87efc617a6bee8a089';
+String _$goRouterHash() => r'1990c6523c6be85a1392bd25e9667c4af727b168';
 
 /// See also [goRouter].
 @ProviderFor(goRouter)

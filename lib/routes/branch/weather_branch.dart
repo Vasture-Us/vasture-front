@@ -15,7 +15,7 @@ const weatherStatefulShellBranch = TypedStatefulShellBranch<WeatherShellBranch>(
   ],
 );
 
-class WeatherScreenRoute extends GoRouteData with _$WeatherScreenRoute{
+class WeatherScreenRoute extends GoRouteData with _$WeatherScreenRoute {
   const WeatherScreenRoute();
 
   @override
