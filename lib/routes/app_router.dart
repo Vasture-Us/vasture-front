@@ -5,7 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'package:vasture/routes/routes.dart';
-import 'package:vasture/presentation/components/navigation_bar.dart';
+import 'package:vasture/presentation/components/navigation_bar/app_navigation_bar.dart';
 import 'package:vasture/presentation/screens/weather_book/weather_book_screen.dart';
 import 'package:vasture/presentation/screens/weather/weather_screen.dart';
 
