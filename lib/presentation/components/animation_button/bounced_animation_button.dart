@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 /// NOTE 押すと沈むアニメーションの実装
-class BouncedAnimation extends StatefulHookWidget {
-  const BouncedAnimation({
+class BouncedAnimationButton extends StatefulHookWidget {
+  const BouncedAnimationButton({
     super.key,
     required this.child,
     this.onTap,
@@ -13,10 +13,10 @@ class BouncedAnimation extends StatefulHookWidget {
   final VoidCallback? onTap;
 
   @override
-  State<BouncedAnimation> createState() => _ButtonAnimationState();
+  State<BouncedAnimationButton> createState() => _ButtonAnimationButtonState();
 }
 
-class _ButtonAnimationState extends State<BouncedAnimation>
+class _ButtonAnimationButtonState extends State<BouncedAnimationButton>
     with SingleTickerProviderStateMixin {
   static const animationDuration = 100;
 
