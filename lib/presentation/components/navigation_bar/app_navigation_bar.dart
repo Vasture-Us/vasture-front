@@ -3,10 +3,11 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'package:vasture/presentation/components/animation/bounced_animation.dart';
+import 'package:vasture/presentation/components/animation_button/bounced_animation_button.dart';
 import 'package:vasture/presentation/components/navigation_bar/navigation_item.dart';
 import 'package:vasture/presentation/components/navigation_bar/notifier.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:vasture/presentation/utils/routes/app_router.dart';
 
 class AppNavigationBar extends HookConsumerWidget {
   const AppNavigationBar({
@@ -51,7 +52,7 @@ class AppNavigationBar extends HookConsumerWidget {
                   pageType: ScreenType.weather,
                   onPressed: () => goBranch(ScreenType.weather),
                 ),
-                BouncedAnimation(
+                BouncedAnimationButton(
                   child: Transform.scale(
                     scale: 1.3,
                     child: SvgPicture.asset(
@@ -61,6 +62,7 @@ class AppNavigationBar extends HookConsumerWidget {
                   ),
                   onTap: () {
                     // TODO: カメラ画面へ遷移する
+                    const CameraPageViewScreenRoute().go(context);
                   },
                 ),
                 NavigationItem(

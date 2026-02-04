@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 /// NOTE 押すと沈むアニメーションの実装
@@ -63,6 +64,7 @@ class _ButtonAnimationButtonState extends State<BouncedAnimationButton>
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        HapticFeedback.mediumImpact();
         widget.onTap?.call();
         _shrinkButtonSize();
         _restoreButtonSize();
