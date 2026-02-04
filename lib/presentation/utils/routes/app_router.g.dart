@@ -9,6 +9,7 @@ part of 'app_router.dart';
 List<RouteBase> get $appRoutes => [
       $mainShellRouteData,
       $introductionScreenRoute,
+      $cameraPageViewScreenRoute,
     ];
 
 RouteBase get $mainShellRouteData => StatefulShellRouteData.$route(
@@ -87,13 +88,6 @@ mixin _$WeatherBookScreenRoute on GoRouteData {
 RouteBase get $introductionScreenRoute => GoRouteData.$route(
       path: '/introduction',
       factory: _$IntroductionScreenRoute._fromState,
-      routes: [
-        GoRouteData.$route(
-          path: '/camera',
-          parentNavigatorKey: CameraScreenRoute.$parentNavigatorKey,
-          factory: _$CameraScreenRoute._fromState,
-        ),
-      ],
     );
 
 mixin _$IntroductionScreenRoute on GoRouteData {
@@ -119,13 +113,18 @@ mixin _$IntroductionScreenRoute on GoRouteData {
   void replace(BuildContext context) => context.replace(location);
 }
 
-mixin _$CameraScreenRoute on GoRouteData {
-  static CameraScreenRoute _fromState(GoRouterState state) =>
-      const CameraScreenRoute();
+RouteBase get $cameraPageViewScreenRoute => GoRouteData.$route(
+      path: '/cameraPageView',
+      factory: _$CameraPageViewScreenRoute._fromState,
+    );
+
+mixin _$CameraPageViewScreenRoute on GoRouteData {
+  static CameraPageViewScreenRoute _fromState(GoRouterState state) =>
+      const CameraPageViewScreenRoute();
 
   @override
   String get location => GoRouteData.$location(
-        '/camera',
+        '/cameraPageView',
       );
 
   @override
@@ -146,7 +145,7 @@ mixin _$CameraScreenRoute on GoRouteData {
 // RiverpodGenerator
 // **************************************************************************
 
-String _$goRouterHash() => r'1990c6523c6be85a1392bd25e9667c4af727b168';
+String _$goRouterHash() => r'65ad49d04a915c75310de4dcfbfb8765b35a754b';
 
 /// See also [goRouter].
 @ProviderFor(goRouter)
