@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vasture/presentation/providers/user_provider.dart';
-import 'package:vasture/routes/app_router.dart';
+import 'package:vasture/presentation/utils/routes/app_router.dart';
 import 'core/config/app_config.dart';
 import 'core/config/supabase_config.dart';
 

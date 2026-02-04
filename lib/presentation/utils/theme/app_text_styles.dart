@@ -14,7 +14,7 @@ class AppTextStyles {
 
   static const TextStyle displayMedium = TextStyle(
     fontFamily: fontFamily,
-    fontSize: 45,
+    fontSize: 40,
     fontWeight: FontWeight.w400,
     height: 1.2,
     color: AppColors.textPrimary,
