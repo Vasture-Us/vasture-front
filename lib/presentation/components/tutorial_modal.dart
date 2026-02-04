@@ -35,7 +35,12 @@ class TutorialModal extends HookConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            padding: const EdgeInsets.only(top: 16, left: 24, right: 24, bottom: 24),
+            padding: const EdgeInsets.only(
+              top: 16,
+              left: 24,
+              right: 24,
+              bottom: 24,
+            ),
             decoration: BoxDecoration(
               color: AppColors.background,
               borderRadius: BorderRadius.circular(30),
@@ -51,21 +56,20 @@ class TutorialModal extends HookConsumerWidget {
               children: [
                 Align(
                   alignment: Alignment.topRight,
-                  child: InkWell(
+                  child: IconButton(
+                    highlightColor: Colors.transparent,
                     splashColor: Colors.transparent,
-                    enableFeedback: false,
-                    onTap: () => Navigator.of(context).pop(),
-                    child: const Icon(LucideIcons.x),
-                    // color: AppColors.textPrimary,
+                    onPressed: () => Navigator.of(context).pop(),
+                    icon: const Icon(LucideIcons.x),
                   ),
                 ),
-                const Gap(16),
                 Text(
                   text,
-                  style: AppTextStyles.bodyLarge,
+                  style: AppTextStyles.bodyLarge
+                      .copyWith(fontWeight: FontWeight.w800),
                   textAlign: TextAlign.center,
                 ),
-                const Gap(16),
+                const Gap(24),
               ],
             ),
           ),
