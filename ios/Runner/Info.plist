@@ -45,5 +45,11 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Required to post location information when getting the weather in your region.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Required to post location information when getting the weather in your region.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>We use your camera to capture sky photos, so that you can store your photos and exchange them with other users.</string>
 </dict>
 </plist>
