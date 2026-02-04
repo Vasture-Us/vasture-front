@@ -3,9 +3,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:vasture/presentation/components/animation/bounced_animation.dart';
-import '../../theme/app_colors.dart';
-import '../../theme/app_text_styles.dart';
+import 'package:vasture/presentation/components/animation_button/bounced_animation_button.dart';
+import 'package:vasture/presentation/utils/theme/app_shadows.dart';
+import 'package:vasture/presentation/utils/routes/app_router.dart';
+import '../../utils/theme/app_colors.dart';
+import '../../utils/theme/app_text_styles.dart';
 
 class IntroductionScreen extends StatelessWidget {
   const IntroductionScreen({super.key});
@@ -21,18 +23,15 @@ class IntroductionScreen extends StatelessWidget {
             children: [
               const Spacer(flex: 1),
               const Gap(50),
-
               SvgPicture.asset(
                 'assets/icons/vasture_logo.svg',
                 width: 80,
                 height: 80,
               ),
-
               const Gap(120),
-
               BouncedAnimationButton(
                 onTap: () {
-                  // TODO go to camera screen
+                  const CameraPageViewScreenRoute().go(context);
                 },
                 child: Container(
                   width: 70,
@@ -40,13 +39,7 @@ class IntroductionScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: AppColors.primary,
                     borderRadius: BorderRadius.circular(30),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.15),
-                        blurRadius: 12,
-                        offset: const Offset(0, 4),
-                      ),
-                    ],
+                    boxShadow: [AppShadows.primary],
                   ),
                   child: const Icon(
                     LucideIcons.moveRight,
@@ -54,7 +47,6 @@ class IntroductionScreen extends StatelessWidget {
                   ),
                 ),
               ),
-
               const Spacer(flex: 3),
             ],
           ),
@@ -76,7 +68,7 @@ class IntroductionScreen extends StatelessWidget {
                 ),
               ),
             ),
-            Gap(24),
+            const Gap(24),
             BouncedAnimationButton(
               onTap: () => _launchUrl('https://example.com/terms'),
               child: Text(
