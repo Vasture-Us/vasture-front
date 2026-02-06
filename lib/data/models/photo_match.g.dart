@@ -10,8 +10,8 @@ _$PhotoMatchModelImpl _$$PhotoMatchModelImplFromJson(
         Map<String, dynamic> json) =>
     _$PhotoMatchModelImpl(
       id: json['id'] as String,
-      userPhotoId: json['userPhotoId'] as String,
-      matchedPhotoId: json['matchedPhotoId'] as String,
+      userPhotoId: json['user_photo_id'] as String,
+      matchedPhotoId: json['matched_photo_id'] as String,
       matchedAt: DateTime.parse(json['matched_at'] as String),
     );
 
@@ -19,7 +19,7 @@ Map<String, dynamic> _$$PhotoMatchModelImplToJson(
         _$PhotoMatchModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'userPhotoId': instance.userPhotoId,
-      'matchedPhotoId': instance.matchedPhotoId,
+      'user_photo_id': instance.userPhotoId,
+      'matched_photo_id': instance.matchedPhotoId,
       'matched_at': instance.matchedAt.toIso8601String(),
     };

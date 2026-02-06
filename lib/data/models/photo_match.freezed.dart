@@ -21,7 +21,9 @@ PhotoMatchModel _$PhotoMatchModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$PhotoMatchModel {
   String get id => throw _privateConstructorUsedError;
+  @JsonKey(name: 'user_photo_id')
   String get userPhotoId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'matched_photo_id')
   String get matchedPhotoId => throw _privateConstructorUsedError;
   @JsonKey(name: 'matched_at')
   DateTime get matchedAt => throw _privateConstructorUsedError;
@@ -44,8 +46,8 @@ abstract class $PhotoMatchModelCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
-      String userPhotoId,
-      String matchedPhotoId,
+      @JsonKey(name: 'user_photo_id') String userPhotoId,
+      @JsonKey(name: 'matched_photo_id') String matchedPhotoId,
       @JsonKey(name: 'matched_at') DateTime matchedAt});
 }
 
@@ -100,8 +102,8 @@ abstract class _$$PhotoMatchModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {String id,
-      String userPhotoId,
-      String matchedPhotoId,
+      @JsonKey(name: 'user_photo_id') String userPhotoId,
+      @JsonKey(name: 'matched_photo_id') String matchedPhotoId,
       @JsonKey(name: 'matched_at') DateTime matchedAt});
 }
 
@@ -149,8 +151,8 @@ class __$$PhotoMatchModelImplCopyWithImpl<$Res>
 class _$PhotoMatchModelImpl extends _PhotoMatchModel {
   const _$PhotoMatchModelImpl(
       {required this.id,
-      required this.userPhotoId,
-      required this.matchedPhotoId,
+      @JsonKey(name: 'user_photo_id') required this.userPhotoId,
+      @JsonKey(name: 'matched_photo_id') required this.matchedPhotoId,
       @JsonKey(name: 'matched_at') required this.matchedAt})
       : super._();
 
@@ -160,8 +162,10 @@ class _$PhotoMatchModelImpl extends _PhotoMatchModel {
   @override
   final String id;
   @override
+  @JsonKey(name: 'user_photo_id')
   final String userPhotoId;
   @override
+  @JsonKey(name: 'matched_photo_id')
   final String matchedPhotoId;
   @override
   @JsonKey(name: 'matched_at')
@@ -210,11 +214,11 @@ class _$PhotoMatchModelImpl extends _PhotoMatchModel {
 
 abstract class _PhotoMatchModel extends PhotoMatchModel {
   const factory _PhotoMatchModel(
-          {required final String id,
-          required final String userPhotoId,
-          required final String matchedPhotoId,
-          @JsonKey(name: 'matched_at') required final DateTime matchedAt}) =
-      _$PhotoMatchModelImpl;
+      {required final String id,
+      @JsonKey(name: 'user_photo_id') required final String userPhotoId,
+      @JsonKey(name: 'matched_photo_id') required final String matchedPhotoId,
+      @JsonKey(name: 'matched_at')
+      required final DateTime matchedAt}) = _$PhotoMatchModelImpl;
   const _PhotoMatchModel._() : super._();
 
   factory _PhotoMatchModel.fromJson(Map<String, dynamic> json) =
@@ -223,8 +227,10 @@ abstract class _PhotoMatchModel extends PhotoMatchModel {
   @override
   String get id;
   @override
+  @JsonKey(name: 'user_photo_id')
   String get userPhotoId;
   @override
+  @JsonKey(name: 'matched_photo_id')
   String get matchedPhotoId;
   @override
   @JsonKey(name: 'matched_at')

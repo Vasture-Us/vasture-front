@@ -71,7 +71,7 @@ class PhotoRepositoryImpl implements PhotoRepository {
   }
 
   @override
-  Future<Either<Failure, PhotoMatch?>> getMatchedPhoto(
+  Future<Either<Failure, SkyPhoto?>> getMatchedPhoto(
       String userPhotoId) async {
     try {
       final matchModel = await dataSource.getMatchedPhoto(userPhotoId);
@@ -82,9 +82,9 @@ class PhotoRepositoryImpl implements PhotoRepository {
   }
 
   @override
-  Future<Either<Failure, SkyPhoto?>> getLatestUserPhoto(String userId) async {
+  Future<Either<Failure, SkyPhoto?>> getLatestUserTodayPhoto(String userId) async {
     try {
-      final photoModel = await dataSource.getLatestUserPhoto(userId);
+      final photoModel = await dataSource.getLatestUserTodayPhoto(userId);
       return Right(photoModel?.toEntity());
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));

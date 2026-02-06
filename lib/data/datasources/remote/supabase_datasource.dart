@@ -124,7 +124,7 @@ class SupabaseDataSource {
     }
   }
 
-  Future<PhotoMatchModel?> getMatchedPhoto(String userPhotoId) async {
+  Future<SkyPhotoModel?> getMatchedPhoto(String userPhotoId) async {
     try {
       final response = await client
           .from(AppConstants.photoMatchesTable)
@@ -134,18 +134,32 @@ class SupabaseDataSource {
 
       if (response == null) return null;
 
-      return PhotoMatchModel.fromJson(response);
+      final photoMatchData = PhotoMatchModel.fromJson(response);
+
+      final skyPhotoRes = await client
+          .from(AppConstants.skyPhotosTable)
+          .select()
+          .eq('id', photoMatchData.matchedPhotoId)
+          .single();
+
+      return SkyPhotoModel.fromJson(skyPhotoRes);
     } catch (e) {
       throw ServerException('Failed to get photo match: ${e.toString()}');
     }
   }
 
-  Future<SkyPhotoModel?> getLatestUserPhoto(String userId) async {
+  Future<SkyPhotoModel?> getLatestUserTodayPhoto(String userId) async {
     try {
+      final now = DateTime.now();
+      final startOfDay = DateTime(now.year, now.month, now.day);
+      final endOfDay = startOfDay.add(const Duration(days: 1));
+
       final response = await client
           .from(AppConstants.skyPhotosTable)
           .select()
           .eq('user_id', userId)
+          .gte('created_at', startOfDay.toIso8601String())
+          .lt('created_at', endOfDay.toIso8601String())
           .order('created_at', ascending: false)
           .limit(1)
           .maybeSingle();
@@ -191,14 +205,17 @@ class SupabaseDataSource {
           .select()
           .neq('user_id', currentUserId)
           .gte('created_at', startOfDay.toIso8601String())
-          .lt('created_at', endOfDay.toIso8601String())
-          .order('created_at', ascending: false)
-          .limit(1)
-          .maybeSingle();
+          .lt('created_at', endOfDay.toIso8601String());
+      // .limit(1)
+      // .maybeSingle();
+      // NOTE: ランダムにする
+      response.shuffle();
 
-      if (response == null) return null;
+      final randomRes = response.firstOrNull;
 
-      return SkyPhotoModel.fromJson(response);
+      if (randomRes == null) return null;
+
+      return SkyPhotoModel.fromJson(randomRes);
     } catch (e) {
       throw ServerException('Failed to get today photo: ${e.toString()}');
     }
