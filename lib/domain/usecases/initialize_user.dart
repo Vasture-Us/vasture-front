@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import '../entities/user.dart';
 import '../repositories/user.dart';
 import '../../core/error/failures.dart';
-import '../../core/utils/uuid_generator.dart';
+import '../../presentation/utils/helpers/uuid_generator.dart';
 
 class InitializeUser {
   final UserRepository repository;

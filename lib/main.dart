@@ -40,6 +40,7 @@ class VastureApp extends HookConsumerWidget {
 
     return MaterialApp.router(
       routerConfig: router,
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         pageTransitionsTheme: const PageTransitionsTheme(
           builders: {

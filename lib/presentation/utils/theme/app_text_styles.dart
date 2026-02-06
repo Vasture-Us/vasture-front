@@ -102,7 +102,7 @@ class AppTextStyles {
 
   static const TextStyle labelLarge = TextStyle(
     fontFamily: fontFamily,
-    fontSize: 14,
+    fontSize: 18,
     fontWeight: FontWeight.w400,
     height: 1.4,
     color: AppColors.textPrimary,

@@ -3,7 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vasture/presentation/components/navigation_bar/notifier.dart';
 import 'package:vasture/presentation/utils/theme/app_colors.dart';
 
-import '../animation_button/bounced_animation_button.dart';
+import '../button/bounced_animation_button.dart';
 
 class NavigationItem extends HookConsumerWidget {
   const NavigationItem({
