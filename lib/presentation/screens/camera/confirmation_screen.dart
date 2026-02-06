@@ -11,7 +11,7 @@ import 'package:vasture/presentation/providers/photo_provider.dart';
 import 'package:vasture/presentation/providers/tutorial_provider.dart';
 import 'package:vasture/presentation/providers/user_provider.dart';
 import 'package:vasture/presentation/providers/weather_provider.dart';
-import 'package:vasture/presentation/screens/camera/components/square_button.dart';
+import 'package:vasture/presentation/components/button/square_button.dart';
 import 'package:vasture/presentation/utils/state/loading_state.dart';
 import 'package:vasture/presentation/utils/theme/app_colors.dart';
 import 'package:vasture/presentation/utils/theme/app_text_styles.dart';

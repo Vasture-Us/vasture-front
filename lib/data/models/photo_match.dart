@@ -10,8 +10,8 @@ class PhotoMatchModel with _$PhotoMatchModel {
 
   const factory PhotoMatchModel({
     required String id,
-    required String userPhotoId,
-    required String matchedPhotoId,
+    @JsonKey(name: 'user_photo_id') required String userPhotoId,
+    @JsonKey(name: 'matched_photo_id') required String matchedPhotoId,
     @JsonKey(name: 'matched_at') required DateTime matchedAt,
   }) = _PhotoMatchModel;
 

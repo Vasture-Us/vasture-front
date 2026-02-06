@@ -7,6 +7,8 @@ import 'package:vasture/presentation/components/loading/loading_overlay.dart';
 import 'package:vasture/presentation/providers/user_provider.dart';
 import 'package:vasture/presentation/screens/camera/camera_page_view_screen.dart';
 import 'package:vasture/presentation/screens/introduction/introduction_screen.dart';
+import 'package:vasture/presentation/screens/photo/photo_screen.dart';
+import 'package:vasture/presentation/screens/settings/settings_screen.dart';
 
 import 'package:vasture/presentation/utils/routes/routes.dart';
 import 'package:vasture/presentation/components/navigation_bar/app_navigation_bar.dart';
@@ -29,6 +31,7 @@ GoRouter goRouter(Ref ref) {
     routes: $appRoutes,
     debugLogDiagnostics: kDebugMode,
     redirect: (context, state) async {
+      // await ref.read(sharedPrefsDataSourceProvider).clear();
       final userId = await ref.read(sharedPrefsDataSourceProvider).getUserIdFromRouter();
       final isTutorialCompleted =
           await ref.read(sharedPrefsDataSourceProvider).isTutorialCompleted();

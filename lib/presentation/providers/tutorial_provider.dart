@@ -30,16 +30,18 @@ class TutorialNotifier extends StateNotifier<TutorialState> {
   final SharedPrefsDataSource dataSource;
 
   TutorialNotifier(this.dataSource) : super(TutorialState()) {
-    _loadTutorialStatus();
+    loadTutorialStatus();
   }
 
-  Future<void> _loadTutorialStatus() async {
+  Future<bool> loadTutorialStatus() async {
     state = state.copyWith(isLoading: true);
     try {
       final isCompleted = await dataSource.isTutorialCompleted();
       state = state.copyWith(isCompleted: isCompleted, isLoading: false);
+      return isCompleted;
     } catch (e) {
       state = state.copyWith(isLoading: false, error: e.toString());
+      return false;
     }
   }
 
@@ -53,6 +55,7 @@ class TutorialNotifier extends StateNotifier<TutorialState> {
   }
 }
 
-final tutorialProvider = StateNotifierProvider<TutorialNotifier, TutorialState>((ref) {
+final tutorialProvider =
+    StateNotifierProvider<TutorialNotifier, TutorialState>((ref) {
   return TutorialNotifier(ref.watch(sharedPrefsDataSourceProvider));
 });

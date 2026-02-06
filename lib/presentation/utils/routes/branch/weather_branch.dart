@@ -9,9 +9,9 @@ class WeatherShellBranch extends StatefulShellBranchData {
 // NOTE ホームタブの定義
 const weatherStatefulShellBranch = TypedStatefulShellBranch<WeatherShellBranch>(
   routes: <TypedRoute<RouteData>>[
-    TypedGoRoute<WeatherScreenRoute>(path: AppRoutes.weather, routes: [
-    
-    ]),
+    TypedGoRoute<WeatherScreenRoute>(
+      path: AppRoutes.weather,
+    ),
   ],
 );
 

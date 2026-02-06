@@ -12,14 +12,14 @@ final photoRepositoryProvider = Provider<PhotoRepository>((ref) {
 class PhotoState {
   final List<SkyPhoto> photos;
   final SkyPhoto? latestPhoto;
-  final PhotoMatch? latestMatch;
+  final SkyPhoto? latestMatchedPhoto;
   final bool isLoading;
   final String? error;
 
   PhotoState({
     this.photos = const [],
     this.latestPhoto,
-    this.latestMatch,
+    this.latestMatchedPhoto,
     this.isLoading = false,
     this.error,
   });
@@ -27,14 +27,14 @@ class PhotoState {
   PhotoState copyWith({
     List<SkyPhoto>? photos,
     SkyPhoto? latestPhoto,
-    PhotoMatch? latestMatch,
+    SkyPhoto? latestMatchedPhoto,
     bool? isLoading,
     String? error,
   }) {
     return PhotoState(
       photos: photos ?? this.photos,
       latestPhoto: latestPhoto ?? this.latestPhoto,
-      latestMatch: latestMatch ?? this.latestMatch,
+      latestMatchedPhoto: latestMatchedPhoto ?? this.latestMatchedPhoto,
       isLoading: isLoading ?? this.isLoading,
       error: error,
     );
@@ -75,17 +75,18 @@ class PhotoNotifier extends StateNotifier<PhotoState> {
     );
   }
 
-  Future<void> loadUserPhotos(String userId) async {
+  Future<List<SkyPhoto>?> loadUserPhotos(String userId) async {
     state = state.copyWith(isLoading: true, error: null);
 
     final result = await repository.getUserPhotos(userId);
 
-    result.fold(
+    return result.fold(
       (failure) {
         state = state.copyWith(
           isLoading: false,
           error: failure.message,
         );
+        return null;
       },
       (photos) {
         state = state.copyWith(
@@ -93,21 +94,26 @@ class PhotoNotifier extends StateNotifier<PhotoState> {
           isLoading: false,
           error: null,
         );
+        return photos;
       },
     );
   }
 
-  Future<void> loadLatestPhoto(String userId) async {
-    final result = await repository.getLatestUserPhoto(userId);
+  Future<SkyPhoto?> loadLatestTodayPhoto(String userId) async {
+    final result = await repository.getLatestUserTodayPhoto(userId);
 
-    result.fold(
+    return result.fold(
       (failure) {
         state = state.copyWith(error: failure.message);
+        return null;
       },
       (photo) {
         if (photo != null) {
           state = state.copyWith(latestPhoto: photo);
+          return photo;
         }
+
+        return null;
       },
     );
   }
@@ -117,10 +123,12 @@ class PhotoNotifier extends StateNotifier<PhotoState> {
 
     result.fold(
       (failure) {
+        print('failed to load matched photo, ${failure.message}');
         state = state.copyWith(error: failure.message);
       },
       (match) {
-        state = state.copyWith(latestMatch: match);
+        print(match);
+        state = state.copyWith(latestMatchedPhoto: match);
       },
     );
   }
@@ -174,7 +182,6 @@ class PhotoNotifier extends StateNotifier<PhotoState> {
         return null;
       },
       (match) {
-        state = state.copyWith(latestMatch: match);
         return match;
       },
     );

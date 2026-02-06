@@ -28,6 +28,18 @@ RouteBase get $mainShellRouteData => StatefulShellRouteData.$route(
             GoRouteData.$route(
               path: '/weatherBook',
               factory: _$WeatherBookScreenRoute._fromState,
+              routes: [
+                GoRouteData.$route(
+                  path: 'photo',
+                  parentNavigatorKey: PhotoScreenRoute.$parentNavigatorKey,
+                  factory: _$PhotoScreenRoute._fromState,
+                ),
+                GoRouteData.$route(
+                  path: 'setting',
+                  parentNavigatorKey: SettingScreenRoute.$parentNavigatorKey,
+                  factory: _$SettingScreenRoute._fromState,
+                ),
+              ],
             ),
           ],
         ),
@@ -69,6 +81,57 @@ mixin _$WeatherBookScreenRoute on GoRouteData {
   @override
   String get location => GoRouteData.$location(
         '/weatherBook',
+      );
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin _$PhotoScreenRoute on GoRouteData {
+  static PhotoScreenRoute _fromState(GoRouterState state) => PhotoScreenRoute(
+        state.extra as String,
+      );
+
+  PhotoScreenRoute get _self => this as PhotoScreenRoute;
+
+  @override
+  String get location => GoRouteData.$location(
+        '/weatherBook/photo',
+      );
+
+  @override
+  void go(BuildContext context) => context.go(location, extra: _self.$extra);
+
+  @override
+  Future<T?> push<T>(BuildContext context) =>
+      context.push<T>(location, extra: _self.$extra);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location, extra: _self.$extra);
+
+  @override
+  void replace(BuildContext context) =>
+      context.replace(location, extra: _self.$extra);
+}
+
+mixin _$SettingScreenRoute on GoRouteData {
+  static SettingScreenRoute _fromState(GoRouterState state) =>
+      const SettingScreenRoute();
+
+  @override
+  String get location => GoRouteData.$location(
+        '/weatherBook/setting',
       );
 
   @override

@@ -8,7 +8,7 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:vasture/presentation/components/shimmer/shimmer_container.dart';
 import 'package:vasture/presentation/components/tutorial_modal.dart';
 import 'package:vasture/presentation/providers/tutorial_provider.dart';
-import 'package:vasture/presentation/screens/camera/components/square_button.dart';
+import 'package:vasture/presentation/components/button/square_button.dart';
 import 'package:vasture/presentation/utils/state/loading_state.dart';
 import '../../utils/theme/app_colors.dart';
 import '../../utils/theme/app_text_styles.dart';
@@ -55,7 +55,8 @@ class CameraScreen extends HookConsumerWidget {
       // NOTE: tutorialProviderの初期化を待つ
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         await Future.delayed(const Duration(milliseconds: 300));
-        final isCompleted = ref.read(tutorialProvider).isCompleted;
+        final isCompleted =
+            await ref.read(tutorialProvider.notifier).loadTutorialStatus();
 
         if (!isCompleted && !hasShownTutorial.value) {
           hasShownTutorial.value = true;
@@ -90,6 +91,7 @@ class CameraScreen extends HookConsumerWidget {
       }
     }
 
+    // TODO: 白い背景を透けさせてユーザーの見ている空をわかりやすいように！ (CameraPreviewの上に半透明のwidget置くね)
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
@@ -99,7 +101,6 @@ class CameraScreen extends HookConsumerWidget {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // const Gap(36),
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
