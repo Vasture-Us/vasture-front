@@ -23,6 +23,6 @@ abstract class PhotoRepository {
   });
   Future<Either<Failure, SkyPhoto>> getPhotoById(String id);
   Future<Either<Failure, List<SkyPhoto>>> getUserPhotos(String userId);
-  Future<Either<Failure, PhotoMatch?>> getMatchedPhoto(String photoId);
-  Future<Either<Failure, SkyPhoto?>> getLatestUserPhoto(String userId);
+  Future<Either<Failure, SkyPhoto?>> getMatchedPhoto(String photoId);
+  Future<Either<Failure, SkyPhoto?>> getLatestUserTodayPhoto(String userId);
 }
