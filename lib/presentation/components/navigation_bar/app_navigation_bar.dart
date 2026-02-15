@@ -3,7 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'package:vasture/presentation/components/animation_button/bounced_animation_button.dart';
+import 'package:vasture/presentation/components/button/bounced_animation_button.dart';
 import 'package:vasture/presentation/components/navigation_bar/navigation_item.dart';
 import 'package:vasture/presentation/components/navigation_bar/notifier.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
