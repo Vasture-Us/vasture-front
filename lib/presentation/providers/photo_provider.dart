@@ -123,11 +123,9 @@ class PhotoNotifier extends StateNotifier<PhotoState> {
 
     result.fold(
       (failure) {
-        print('failed to load matched photo, ${failure.message}');
         state = state.copyWith(error: failure.message);
       },
       (match) {
-        print(match);
         state = state.copyWith(latestMatchedPhoto: match);
       },
     );

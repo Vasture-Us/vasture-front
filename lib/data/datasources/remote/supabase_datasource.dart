@@ -206,8 +206,7 @@ class SupabaseDataSource {
           .neq('user_id', currentUserId)
           .gte('created_at', startOfDay.toIso8601String())
           .lt('created_at', endOfDay.toIso8601String());
-      // .limit(1)
-      // .maybeSingle();
+
       // NOTE: ランダムにする
       response.shuffle();
 

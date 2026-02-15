@@ -5,8 +5,8 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:vasture/presentation/utils/theme/app_colors.dart';
 import 'package:vasture/presentation/utils/theme/app_text_styles.dart';
 
-class TutorialModal extends HookConsumerWidget {
-  const TutorialModal({
+class CustomModal extends HookConsumerWidget {
+  const CustomModal({
     super.key,
     required this.text,
   });
@@ -21,7 +21,7 @@ class TutorialModal extends HookConsumerWidget {
       context: context,
       barrierDismissible: true,
       barrierColor: Colors.black.withValues(alpha: 0.35),
-      builder: (context) => TutorialModal(text: text),
+      builder: (context) => CustomModal(text: text),
     );
   }
 

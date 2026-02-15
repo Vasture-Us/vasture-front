@@ -26,7 +26,6 @@ class FoundSkyScreen extends HookConsumerWidget {
 
     Future<void> completeTutorial() async {
       if (!isTutorialCompleted) {
-        print('Completing tutorial...');
         ref.read(loadingStateNotifierProvider.notifier).whileLoading(
           () async {
             await ref.read(tutorialProvider.notifier).completeTutorial();

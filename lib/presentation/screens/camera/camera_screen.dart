@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:gap/gap.dart';
@@ -6,9 +8,11 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import 'package:vasture/presentation/components/shimmer/shimmer_container.dart';
-import 'package:vasture/presentation/components/tutorial_modal.dart';
+import 'package:vasture/presentation/components/custom_modal.dart';
+import 'package:vasture/presentation/providers/sky_model_provider.dart';
 import 'package:vasture/presentation/providers/tutorial_provider.dart';
 import 'package:vasture/presentation/components/button/square_button.dart';
+import 'package:vasture/presentation/utils/helpers/sky_conf_converter.dart';
 import 'package:vasture/presentation/utils/state/loading_state.dart';
 import '../../utils/theme/app_colors.dart';
 import '../../utils/theme/app_text_styles.dart';
@@ -29,6 +33,14 @@ class CameraScreen extends HookConsumerWidget {
     final isCameraInitialized = useState(false);
     final hasShownTutorial = useRef(false);
     final loadingState = ref.read(loadingStateNotifierProvider.notifier);
+
+    Future<void> showCustomModal(String message) async {
+      if (!context.mounted) return;
+      await CustomModal.show(
+        context: context,
+        text: message,
+      );
+    }
 
     useEffect(() {
       Future<void> initializeCamera() async {
@@ -61,10 +73,8 @@ class CameraScreen extends HookConsumerWidget {
         if (!isCompleted && !hasShownTutorial.value) {
           hasShownTutorial.value = true;
           if (!context.mounted) return;
-          await TutorialModal.show(
-            context: context,
-            text:
-                '''「空」は無数にある。\n人それぞれの空がある。\n\nそして、それらは一つにつながっている。\n\n一つの大きな世界と一緒に\nあなただけの空がここにはある。\n\nカメラボタンを押して\nあなたの空の写真を撮影してみよう！''',
+          await showCustomModal(
+            '''「空」は無数にある。\n人それぞれの空がある。\n\nそして、それらは一つにつながっている。\n\n一つの大きな世界と一緒に\nあなただけの空がここにはある。\n\nカメラボタンを押して\nあなたの空の写真を撮影してみよう！''',
           );
         }
       });
@@ -74,7 +84,34 @@ class CameraScreen extends HookConsumerWidget {
       };
     }, []);
 
-    Future<void> takePicture() async {
+    Future<void> validateSkyImage(String imagePath) async {
+      await ref
+          .read(skyInfoProvider.notifier)
+          .fetchSkyImageInfo(File(imagePath));
+
+      final skyInfoState = ref.read(skyInfoProvider);
+
+      if (skyInfoState.skyInfo == null) {
+        await showCustomModal(
+          '写真を上手く読み込めませんでした〜。\nもう一度撮影してください。',
+        );
+        return;
+      }
+
+      if (!skyInfoState.skyInfo!.isSky) {
+        // NOTE: 空の写真でない時、自然言語でモデルからの信頼度を返す
+        await showCustomModal(
+          SkyConfConverter.convertToMessage(
+            skyInfoState.skyInfo!.averageConf,
+          ),
+        );
+        return;
+      }
+
+      onPhotoTaken(imagePath);
+    }
+
+    Future<void> takeAndValidatePicture() async {
       if (cameraController.value == null ||
           !cameraController.value!.value.isInitialized) {
         return;
@@ -84,14 +121,14 @@ class CameraScreen extends HookConsumerWidget {
         final image = await cameraController.value!.takePicture();
 
         if (context.mounted) {
-          onPhotoTaken(image.path);
+          await validateSkyImage(image.path);
         }
       } catch (e) {
         debugPrint('Error taking picture: $e');
       }
     }
 
-    // TODO: 白い背景を透けさせてユーザーの見ている空をわかりやすいように！ (CameraPreviewの上に半透明のwidget置くね)
+    // TODO: 白い背景を透けさせてユーザーの見ている空をわかりやすいように！ (CameraPreviewの上に半透明のwidget置く)
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
@@ -140,7 +177,7 @@ class CameraScreen extends HookConsumerWidget {
                             child: SquareButton(
                               onTap: () {
                                 loadingState.whileLoading(() async {
-                                  await takePicture();
+                                  await takeAndValidatePicture();
                                 });
                               },
                               icon: const Icon(LucideIcons.camera),
