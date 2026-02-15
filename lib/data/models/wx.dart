@@ -37,8 +37,6 @@ abstract class Srf with _$Srf {
     required int wndspd,
     required int wnddir,
     required int rhum,
-    // required int feelidx,
-    // required int feeltmp,
   }) = _Srf;
 
   factory Srf.fromJson(Map<String, Object?> json) => _$SrfFromJson(json);
