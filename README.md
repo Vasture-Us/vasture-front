@@ -1,10 +1,10 @@
-<div style="text-align:center;">
+<div align="center">
     <img src="readme_assets/vasture-cover.png" width=600>
 </div>
 
 <br>
 
-<div style="text-align:center;">
+<div align="center">
 
 ![badge](https://img.shields.io/badge/Dart-3.9.2-blue?logo=dart)
 ![badge](https://img.shields.io/badge/Flutter-3.35.7-blue?logo=flutter)
@@ -14,6 +14,8 @@
 [![Open in Visual Studio Code](https://img.shields.io/static/v1?logo=visualstudiocode&label=&message=Open%20in%20Visual%20Studio%20Code&labelColor=2c2c32&color=white&logoColor=007acc)](https://github.dev/Vasture-Us/vasture-front/)
 
 </div>
+
+<br>
 
 ## 🍹 Contents
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
