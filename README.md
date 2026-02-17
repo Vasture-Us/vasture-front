@@ -15,6 +15,23 @@
 
 </div>
 
+## 🍹 Contents
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+- [😎 About Vasture](#-about-vasture)
+  - [Features](#-features)
+  - [UI Screens](#-ui-screens)
+  - [Reason](#-reason)
+  - [Persona](#-persona)
+  - [Next Features](#-next-features)
+  - [Next Steps](#-next-steps)
+- [📺 Technologies](#-technologies)
+  - [How to run?](#-how-to-run)
+  - [Folder Structure](#-folder-structure)
+  - [ER Graph](#-er-graph)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 <br>
 
