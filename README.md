@@ -11,6 +11,7 @@
 ![badge](https://img.shields.io/badge/DB,%20Storage-Supabase-lightgreen?logo=supabase)
 [![badge](https://img.shields.io/badge/API-WxTech%20Data%20API-lightblue)](https://wxtech.weathernews.com/products/data/api/operations/get1kmMeshPinpointWeatherForecast/)
 [![badge](https://img.shields.io/badge/Model%20Backend-vasture%20backend-yellow)](https://github.com/Vasture-Us/vasture-back)
+[![badge](https://img.shields.io/badge/Architecture-Clean%20Architecture-lightgray)](https://github.com/Vasture-Us/vasture-back)
 [![Open in Visual Studio Code](https://img.shields.io/static/v1?logo=visualstudiocode&label=&message=Open%20in%20Visual%20Studio%20Code&labelColor=2c2c32&color=white&logoColor=007acc)](https://github.dev/Vasture-Us/vasture-front/)
 
 </div>
