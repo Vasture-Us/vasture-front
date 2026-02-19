@@ -143,7 +143,7 @@ fvm use 3.35.7
 ```
 3. アプリのビルド、インストール
 ```bash
-flutter run ios
+flutter run
 ```
 4. 🍀 Completed!
 
