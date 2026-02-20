@@ -3,8 +3,8 @@ import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vasture/presentation/components/button/bounced_animation_button.dart';
+import 'package:vasture/presentation/providers/user_provider.dart';
 import 'package:vasture/presentation/utils/routes/app_router.dart';
 import 'package:vasture/presentation/utils/theme/app_text_styles.dart';
 
@@ -55,13 +55,11 @@ class SettingsScreen extends ConsumerWidget {
     );
 
     if (confirmed == true && context.mounted) {
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.clear();
-
-      // TODO: Delete user data from Supabase
+      final userId = ref.read(userProvider).user?.id;
+      await ref.read(userProvider.notifier).deleteUserById(userId ?? '');
 
       if (context.mounted) {
-        const IntroductionScreenRoute().go(context);
+        const IntroductionScreenRoute().push(context);
       }
     }
   }

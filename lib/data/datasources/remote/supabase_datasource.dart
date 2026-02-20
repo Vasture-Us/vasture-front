@@ -8,7 +8,6 @@ import '../../models/weather.dart';
 import '../../models/photo_match.dart';
 import 'dart:io';
 
-// TODO: Folderに分けたい
 class SupabaseDataSource {
   final SupabaseClient client = SupabaseConfig.client;
 
@@ -40,6 +39,14 @@ class SupabaseDataSource {
       return UserModel.fromJson(response);
     } catch (e) {
       throw ServerException('Failed to create user: ${e.toString()}');
+    }
+  }
+
+  Future<void> deleteUser(String id) async {
+    try {
+      await client.from(AppConstants.usersTable).delete().eq('id', id);
+    } catch (e) {
+      throw ServerException('Failed to delete user: ${e.toString()}');
     }
   }
 

@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vasture/domain/repositories/user.dart';
 import '../../domain/entities/user.dart';
 import '../../domain/usecases/initialize_user.dart';
 import '../../data/repositories/user_impl.dart';
@@ -57,8 +58,9 @@ class UserState {
 // User notifier
 class UserNotifier extends StateNotifier<UserState> {
   final InitializeUser initializeUser;
+  final UserRepository repository;
 
-  UserNotifier(this.initializeUser) : super(UserState());
+  UserNotifier(this.initializeUser, this.repository) : super(UserState());
 
   Future<void> initialize() async {
     state = state.copyWith(isLoading: true, error: null);
@@ -81,9 +83,25 @@ class UserNotifier extends StateNotifier<UserState> {
       },
     );
   }
+
+  Future<void> deleteUserById(String id) async {
+    state = state.copyWith(isLoading: true, error: null);
+    final result = await repository.deleteUserById(id);
+
+    result.fold(
+      (failure) {
+        state = state.copyWith(
+          isLoading: false,
+          error: failure.message,
+        );
+      },
+      (user) {},
+    );
+  }
 }
 
 // User provider
 final userProvider = StateNotifierProvider<UserNotifier, UserState>((ref) {
-  return UserNotifier(ref.watch(initializeUserUseCaseProvider));
+  return UserNotifier(ref.watch(initializeUserUseCaseProvider),
+      ref.watch(userRepositoryProvider));
 });

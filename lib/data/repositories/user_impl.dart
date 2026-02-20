@@ -55,4 +55,18 @@ class UserRepositoryImpl implements UserRepository {
       return Left(CacheFailure(e.message));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> deleteUserById(String id) async {
+    try {
+      await remoteDataSource.deleteUser(id);
+      await localDataSource.clear();
+
+      return const Right(null);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
+    } on CacheException catch (e) {
+      return Left(CacheFailure(e.message));
+    }
+  }
 }
