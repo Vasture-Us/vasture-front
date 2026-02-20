@@ -32,7 +32,6 @@ GoRouter goRouter(Ref ref) {
     routes: $appRoutes,
     debugLogDiagnostics: kDebugMode,
     redirect: (context, state) async {
-      // await ref.read(sharedPrefsDataSourceProvider).clear();
       final userId = await ref.read(sharedPrefsDataSourceProvider).getUserIdFromRouter();
       final isTutorialCompleted =
           await ref.read(sharedPrefsDataSourceProvider).isTutorialCompleted();
