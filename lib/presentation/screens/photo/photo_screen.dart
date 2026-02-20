@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:vasture/presentation/components/button/bounced_animation_button.dart';
 import 'package:vasture/presentation/components/shimmer/flexible_shimmer_container.dart';
+import 'package:vasture/presentation/utils/routes/app_router.dart';
 import '../../utils/theme/app_colors.dart';
 import '../../utils/theme/app_text_styles.dart';
 import '../../providers/user_provider.dart';
@@ -21,12 +22,12 @@ class PhotoScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final photoState = ref.watch(photoProvider);
     final photos = photoState.photos;
-    final parsedDate = DateFormat('MMMM yyyy').parse(date);
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         final userId = ref.read(userProvider).user?.id;
         if (userId != null) {
+          final parsedDate = DateFormat('MMMM yyyy').parse(date);
           await ref.read(photoProvider.notifier).loadPhotosByMonth(
                 userId,
                 parsedDate.year,
@@ -36,7 +37,7 @@ class PhotoScreen extends HookConsumerWidget {
       });
 
       return null;
-    }, [parsedDate.year, parsedDate.month]);
+    }, []);
 
     Widget buildShimmerPlaceholders() {
       return Padding(
@@ -65,7 +66,7 @@ class PhotoScreen extends HookConsumerWidget {
         backgroundColor: AppColors.background,
         elevation: 0,
         leading: IconButton(
-          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
           onPressed: () => Navigator.of(context).pop(),
           icon: const Icon(LucideIcons.arrowLeft),
         ),
@@ -93,11 +94,7 @@ class PhotoScreen extends HookConsumerWidget {
                     final photo = photos[index];
                     return BouncedAnimationButton(
                       onTap: () {
-                        // Navigator.of(context).push(
-                        //   MaterialPageRoute(
-                        //     builder: (_) => PhotoDetailScreen(photo: photo),
-                        //   ),
-                        // );
+                        PhotoDetailScreenRoute(photo.id).push(context);
                       },
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

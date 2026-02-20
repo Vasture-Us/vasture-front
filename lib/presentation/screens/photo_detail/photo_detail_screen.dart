@@ -1,39 +1,65 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:intl/intl.dart';
-import 'package:vasture/domain/entities/sky_photo.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
+
+import 'package:vasture/domain/entities/weather.dart';
+import 'package:vasture/presentation/providers/weather_provider.dart';
+import 'package:vasture/presentation/screens/photo_detail/photo_detail_screen_shimmer.dart';
+import 'package:vasture/presentation/utils/helpers/custom_date_formatter.dart';
+import 'package:vasture/presentation/utils/helpers/weather_condition_converter.dart';
+import 'package:vasture/presentation/utils/theme/app_text_styles.dart';
 import '../../utils/theme/app_colors.dart';
 import '../weather/components/photo_swiper.dart';
 import '../../components/weather_shape.dart';
 import '../../providers/photo_provider.dart';
 
-class PhotoDetailScreen extends ConsumerStatefulWidget {
-  final SkyPhoto photo;
+class PhotoDetailScreen extends HookConsumerWidget {
+  final String photoId;
 
   const PhotoDetailScreen({
     super.key,
-    required this.photo,
+    required this.photoId,
   });
 
   @override
-  ConsumerState<PhotoDetailScreen> createState() => _PhotoDetailScreenState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isLoading = useState(true);
+    final weatherState = useState<Weather?>(null);
+    final weather = weatherState.value;
 
-class _PhotoDetailScreenState extends ConsumerState<PhotoDetailScreen> {
-  @override
-  void initState() {
-    super.initState();
-    _loadMatch();
-  }
-
-  Future<void> _loadMatch() async {
-    await ref.read(photoProvider.notifier).loadMatchedPhoto(widget.photo.id);
-  }
-
-  @override
-  Widget build(BuildContext context) {
     final photoState = ref.watch(photoProvider);
-    final match = photoState.latestMatchedPhoto;
+    final matchedPhoto = photoState.latestMatchedPhoto;
+    final photo = photoState.photos.firstWhere(
+      (p) => p.id == photoId,
+      orElse: () => throw Exception('Photo not found'),
+    );
+    final label =
+        WeatherConditionConverter.getLabel(weather?.condition ?? '100');
+
+    useEffect(() {
+      Future<void> loadData() async {
+        final matchedPhoto =
+            await ref.read(photoProvider.notifier).loadMatchedPhoto(photoId);
+
+        if (matchedPhoto == null) {
+          isLoading.value = false;
+          return;
+        }
+
+        weatherState.value = await ref
+            .read(weatherProvider.notifier)
+            .getWeatherById(matchedPhoto.weatherId ?? '');
+      }
+
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        await loadData();
+        isLoading.value = false;
+      });
+
+      return null;
+    }, [photoId]);
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -41,77 +67,68 @@ class _PhotoDetailScreenState extends ConsumerState<PhotoDetailScreen> {
         backgroundColor: AppColors.background,
         elevation: 0,
         leading: IconButton(
+          highlightColor: Colors.transparent,
+          splashColor: Colors.transparent,
           onPressed: () => Navigator.of(context).pop(),
-          icon: const Icon(Icons.arrow_back),
-        ),
-        title: Text(
-          DateFormat('MMMM d, y').format(widget.photo.createdAt),
-          style: const TextStyle(
-            fontFamily: 'InstrumentSerif',
-            fontSize: 20,
-            fontWeight: FontWeight.w400,
-          ),
+          icon: const Icon(LucideIcons.arrowLeft),
         ),
       ),
       body: SafeArea(
-        child: Stack(
-          children: [
-            // Weather shape
-            Positioned(
-              top: -20,
-              left: -20,
-              child: WeatherShape(
-                weatherCondition: 'Sunny', // TODO: Get from weather data
-              ),
-            ),
-
-            Column(
-              children: [
-                const SizedBox(height: 48),
-
-                // Weather info
-                Padding(
-                  padding: const EdgeInsets.only(right: 24),
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        const Text(
-                          '12°', // TODO: Get from weather data
-                          style: TextStyle(
-                            fontFamily: 'InstrumentSerif',
-                            fontSize: 48,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                        Text(
-                          DateFormat('EEEE').format(widget.photo.createdAt),
-                          style: const TextStyle(
-                            fontFamily: 'InstrumentSerif',
-                            fontSize: 24,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                      ],
+        top: false,
+        bottom: false,
+        child: isLoading.value
+            ? const PhotoDetailScreenShimmer()
+            : Stack(
+                children: [
+                  Positioned(
+                    bottom: -20,
+                    right: 0,
+                    child: WeatherShape(
+                      assetPath: 'assets/shapes/photo_detail_bottom_shape.svg',
+                      weatherCondition: weather?.condition ?? '100',
                     ),
                   ),
-                ),
-
-                const SizedBox(height: 24),
-
-                Expanded(
-                  child: PhotoSwiper(
-                    userPhoto: widget.photo,
-                    matchedPhoto: match != null ? widget.photo : null,
+                  Column(
+                    children: [
+                      const Gap(36),
+                      Expanded(
+                        child: PhotoSwiper(
+                          userPhoto: photo,
+                          matchedPhoto: matchedPhoto,
+                        ),
+                      ),
+                      const Gap(54),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 54),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              CustomDateFormatter()
+                                  .formatDateWithOrdinal(photo.createdAt),
+                              style: AppTextStyles.headlineLarge,
+                            ),
+                            const Gap(28),
+                            Row(
+                              children: [
+                                Text(
+                                  '${weather?.temperature.round()}°',
+                                  style: AppTextStyles.displayLarge,
+                                ),
+                                Text(
+                                  '$label.',
+                                  style: AppTextStyles.displayLarge,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      const Gap(54),
+                    ],
                   ),
-                ),
-
-                const SizedBox(height: 24),
-              ],
-            ),
-          ],
-        ),
+                ],
+              ),
       ),
     );
   }
