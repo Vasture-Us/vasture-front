@@ -13,4 +13,8 @@ abstract class WeatherRepository {
     required double temperature,
     required String location,
   });
+
+  Future<Either<Failure, Weather>> getWeatherById({
+    required String id,
+  });
 }
