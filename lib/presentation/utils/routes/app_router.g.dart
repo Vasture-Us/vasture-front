@@ -33,6 +33,14 @@ RouteBase get $mainShellRouteData => StatefulShellRouteData.$route(
                   path: 'photo',
                   parentNavigatorKey: PhotoScreenRoute.$parentNavigatorKey,
                   factory: _$PhotoScreenRoute._fromState,
+                  routes: [
+                    GoRouteData.$route(
+                      path: 'photoDetail',
+                      parentNavigatorKey:
+                          PhotoDetailScreenRoute.$parentNavigatorKey,
+                      factory: _$PhotoDetailScreenRoute._fromState,
+                    ),
+                  ],
                 ),
                 GoRouteData.$route(
                   path: 'setting',
@@ -107,6 +115,35 @@ mixin _$PhotoScreenRoute on GoRouteData {
   @override
   String get location => GoRouteData.$location(
         '/weatherBook/photo',
+      );
+
+  @override
+  void go(BuildContext context) => context.go(location, extra: _self.$extra);
+
+  @override
+  Future<T?> push<T>(BuildContext context) =>
+      context.push<T>(location, extra: _self.$extra);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location, extra: _self.$extra);
+
+  @override
+  void replace(BuildContext context) =>
+      context.replace(location, extra: _self.$extra);
+}
+
+mixin _$PhotoDetailScreenRoute on GoRouteData {
+  static PhotoDetailScreenRoute _fromState(GoRouterState state) =>
+      PhotoDetailScreenRoute(
+        state.extra as String,
+      );
+
+  PhotoDetailScreenRoute get _self => this as PhotoDetailScreenRoute;
+
+  @override
+  String get location => GoRouteData.$location(
+        '/weatherBook/photo/photoDetail',
       );
 
   @override

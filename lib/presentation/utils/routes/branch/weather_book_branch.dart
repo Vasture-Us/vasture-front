@@ -12,8 +12,12 @@ const weatherBookStatefulShellBranch =
       path: AppRoutes.weatherBook,
       routes: [
         TypedGoRoute<PhotoScreenRoute>(
-          path: WeatherBookAppRoutes.photo,
-        ),
+            path: WeatherBookAppRoutes.photo,
+            routes: [
+              TypedGoRoute<PhotoDetailScreenRoute>(
+                path: WeatherBookAppRoutes.photoDetail,
+              )
+            ]),
         TypedGoRoute<SettingScreenRoute>(
           path: WeatherBookAppRoutes.setting,
         ),
@@ -30,16 +34,11 @@ class WeatherBookScreenRoute extends GoRouteData with _$WeatherBookScreenRoute {
     return const WeatherBookScreen();
   }
 }
-class PhotoScreenParam {
-  final int year;
-  final int month;
-  final String monthName;
-
-  const PhotoScreenParam({required this.year, required this.month, required this.monthName});
-}
 
 class PhotoScreenRoute extends GoRouteData with _$PhotoScreenRoute {
-  const PhotoScreenRoute(this.$extra,);
+  const PhotoScreenRoute(
+    this.$extra,
+  );
 
   final String $extra;
 
@@ -53,9 +52,23 @@ class PhotoScreenRoute extends GoRouteData with _$PhotoScreenRoute {
   }
 }
 
+class PhotoDetailScreenRoute extends GoRouteData with _$PhotoDetailScreenRoute {
+  const PhotoDetailScreenRoute(this.$extra);
+
+  final String $extra;
+
+  static final GlobalKey<NavigatorState> $parentNavigatorKey = rootNavigatorKey;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return PhotoDetailScreen(
+      photoId: $extra,
+    );
+  }
+}
+
 class SettingScreenRoute extends GoRouteData with _$SettingScreenRoute {
   const SettingScreenRoute();
-
 
   static final GlobalKey<NavigatorState> $parentNavigatorKey = rootNavigatorKey;
 
