@@ -12,5 +12,6 @@ class AppRoutes {
 
 class WeatherBookAppRoutes {
   static const photo = 'photo';
+  static const photoDetail = 'photoDetail';
   static const setting = 'setting';
 }
