@@ -103,6 +103,19 @@ class WeatherNotifier extends StateNotifier<WeatherState> {
     );
   }
 
+  Future<Weather?> getWeatherById(String id) async {
+    final result = await repository.getWeatherById(id: id);
+
+    return result.fold(
+      (failure) {
+        return null;
+      },
+      (weather) {
+        return weather;
+      },
+    );
+  }
+
   Future<Position> _getCurrentPosition() async {
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
