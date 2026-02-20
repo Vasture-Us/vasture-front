@@ -8,8 +8,8 @@ import 'package:vasture/presentation/components/button/bounced_animation_button.
 import 'package:vasture/presentation/components/weather_shape.dart';
 import 'package:vasture/presentation/providers/weather_provider.dart';
 import 'package:vasture/presentation/screens/weather_book/components/month_card.dart';
+import 'package:vasture/presentation/screens/weather_book/weather_book_screen_shimmer.dart';
 import 'package:vasture/presentation/utils/routes/app_router.dart';
-import '../../components/shimmer/flexible_shimmer_container.dart';
 import '../../utils/theme/app_colors.dart';
 import '../../utils/theme/app_text_styles.dart';
 import '../../providers/user_provider.dart';
@@ -47,32 +47,10 @@ class WeatherBookScreen extends HookConsumerWidget {
       return null;
     }, []);
 
-    Widget buildShimmerPlaceholders() {
-      return Padding(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          spacing: 16,
-          children: List.generate(
-            3,
-            (_) => FlexibleShimmerContainer(
-              width: MediaQuery.of(context).size.width,
-              height: 200,
-              radius: 24,
-            ),
-          ),
-        ),
-      );
-    }
-
     return Scaffold(
       backgroundColor: AppColors.background,
       body: isLoading.value
-          ? Column(
-            children: [
-              const Gap(154),
-              buildShimmerPlaceholders(),
-            ],
-          )
+          ? const WeatherBookScreenShimmer()
           : groupedPhotos.value.isEmpty
               ? const Center(
                   child: Text(
