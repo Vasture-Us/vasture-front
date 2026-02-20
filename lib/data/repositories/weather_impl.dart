@@ -63,4 +63,14 @@ class WeatherRepositoryImpl implements WeatherRepository {
       return Left(ServerFailure(e.message));
     }
   }
+
+  @override
+  Future<Either<Failure, Weather>> getWeatherById({required String id}) async {
+    try {
+      final weatherModel = await supabaseDataSource.getWeatherById(id: id);
+      return Right(weatherModel.toEntity());
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
+    }
+  }
 }
