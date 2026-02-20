@@ -67,7 +67,12 @@ class WeatherBookScreen extends HookConsumerWidget {
     return Scaffold(
       backgroundColor: AppColors.background,
       body: isLoading.value
-          ? buildShimmerPlaceholders()
+          ? Column(
+            children: [
+              const Gap(154),
+              buildShimmerPlaceholders(),
+            ],
+          )
           : groupedPhotos.value.isEmpty
               ? const Center(
                   child: Text(

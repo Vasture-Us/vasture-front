@@ -194,6 +194,22 @@ class SupabaseDataSource {
     }
   }
 
+  Future<WeatherModel> getWeatherById({
+    required String id,
+  }) async {
+    try {
+      final response = await client
+          .from(AppConstants.weatherTable)
+          .select()
+          .eq('id', id)
+          .single();
+
+      return WeatherModel.fromJson(response);
+    } catch (e) {
+      throw ServerException('Failed to get weather by id: ${e.toString()}');
+    }
+  }
+
   Future<SkyPhotoModel?> getTodayPhotoByOtherUser(String currentUserId) async {
     try {
       final now = DateTime.now();

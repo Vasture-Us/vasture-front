@@ -4,10 +4,12 @@ import '../utils/helpers/weather_condition_converter.dart';
 
 class WeatherShape extends StatelessWidget {
   final String weatherCondition;
+  final String assetPath;
 
   const WeatherShape({
     super.key,
     required this.weatherCondition,
+    this.assetPath  = 'assets/shapes/weather_shape.svg',
   });
 
   Color _getShapeColor(String condition) {
@@ -18,7 +20,7 @@ class WeatherShape extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SvgPicture.asset(
-      'assets/shapes/weather_shape.svg',
+      assetPath,
       colorFilter: ColorFilter.mode(
         _getShapeColor(weatherCondition),
         BlendMode.srcIn,

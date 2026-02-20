@@ -8,6 +8,7 @@ import 'package:vasture/presentation/providers/user_provider.dart';
 import 'package:vasture/presentation/screens/camera/camera_page_view_screen.dart';
 import 'package:vasture/presentation/screens/introduction/introduction_screen.dart';
 import 'package:vasture/presentation/screens/photo/photo_screen.dart';
+import 'package:vasture/presentation/screens/photo_detail/photo_detail_screen.dart';
 import 'package:vasture/presentation/screens/settings/settings_screen.dart';
 
 import 'package:vasture/presentation/utils/routes/routes.dart';

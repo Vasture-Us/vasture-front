@@ -118,15 +118,17 @@ class PhotoNotifier extends StateNotifier<PhotoState> {
     );
   }
 
-  Future<void> loadMatchedPhoto(String userPhotoId) async {
+  Future<SkyPhoto?> loadMatchedPhoto(String userPhotoId) async {
     final result = await repository.getMatchedPhoto(userPhotoId);
 
-    result.fold(
+    return result.fold(
       (failure) {
         state = state.copyWith(error: failure.message);
+        return null;
       },
-      (match) {
-        state = state.copyWith(latestMatchedPhoto: match);
+      (matchedPhoto) {
+        state = state.copyWith(latestMatchedPhoto: matchedPhoto);
+        return matchedPhoto;
       },
     );
   }
