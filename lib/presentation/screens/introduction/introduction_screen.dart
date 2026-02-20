@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:vasture/core/constants/app_constants.dart';
 import 'package:vasture/presentation/components/button/bounced_animation_button.dart';
 import 'package:vasture/presentation/utils/theme/app_shadows.dart';
 import 'package:vasture/presentation/utils/routes/app_router.dart';
@@ -62,7 +63,7 @@ class IntroductionScreen extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               BouncedAnimationButton(
-                onTap: () => _launchUrl('https://example.com/privacy'),
+                onTap: () => _launchUrl(AppConstants.privacyPolicyUrl),
                 child: Text(
                   'Privacy Policy',
                   style: AppTextStyles.titleMedium.copyWith(
@@ -72,7 +73,7 @@ class IntroductionScreen extends StatelessWidget {
               ),
               const Gap(24),
               BouncedAnimationButton(
-                onTap: () => _launchUrl('https://example.com/terms'),
+                onTap: () => _launchUrl(AppConstants.termsOfServiceUrl),
                 child: Text(
                   'Terms of Service',
                   style: AppTextStyles.titleMedium.copyWith(
