@@ -3,6 +3,7 @@ import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:vasture/core/constants/app_constants.dart';
 import 'package:vasture/presentation/components/button/bounced_animation_button.dart';
 import 'package:vasture/presentation/providers/user_provider.dart';
 import 'package:vasture/presentation/utils/routes/app_router.dart';
@@ -91,7 +92,7 @@ class SettingsScreen extends ConsumerWidget {
               _SettingsItem(
                 icon: LucideIcons.forward,
                 title: 'Send Feedback',
-                onTap: () => _launchUrl('https://example.com/privacy'),
+                onTap: () => _launchUrl('https://forms.gle/M9yi6dGvEbiWxDYN6'),
               ),
             ],
           ),
@@ -102,12 +103,12 @@ class SettingsScreen extends ConsumerWidget {
               _SettingsItem(
                 icon: LucideIcons.shield,
                 title: 'Privacy Policy',
-                onTap: () => _launchUrl('https://example.com/privacy'),
+                onTap: () => _launchUrl(AppConstants.privacyPolicyUrl),
               ),
               _SettingsItem(
                 icon: LucideIcons.file,
                 title: 'Terms of Service',
-                onTap: () => _launchUrl('https://example.com/terms'),
+                onTap: () => _launchUrl(AppConstants.termsOfServiceUrl),
               ),
             ],
           ),
