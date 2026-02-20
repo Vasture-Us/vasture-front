@@ -63,6 +63,8 @@ class PhotoScreen extends HookConsumerWidget {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
+        animateColor: false,
+        surfaceTintColor: Colors.transparent,
         backgroundColor: AppColors.background,
         elevation: 0,
         leading: IconButton(
