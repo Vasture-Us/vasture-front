@@ -42,6 +42,7 @@ dependencies:
   card_swiper: ^3.0.1
   dio: ^5.9.1
   retrofit: 4.8.0
+  flutter_launcher_icons: ^0.14.4
 
 dev_dependencies:
   flutter_test:
@@ -54,6 +55,13 @@ dev_dependencies:
   json_serializable: ^6.8.0
   riverpod_generator: ^2.6.2
   retrofit_generator: 9.7.0
+
+flutter_icons:
+  ios: true
+  image_path: "assets/launcher/vasture_app_icon.png"
+  remove_alpha_ios: true
+  adaptive_icon_background: "#ffffff"
+  adaptive_icon_foreground: "#ffffff"
 
 flutter:
   uses-material-design: true
