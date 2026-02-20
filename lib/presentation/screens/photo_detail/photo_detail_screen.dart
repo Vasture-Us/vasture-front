@@ -115,6 +115,7 @@ class PhotoDetailScreen extends HookConsumerWidget {
                                   '${weather?.temperature.round()}°',
                                   style: AppTextStyles.displayLarge,
                                 ),
+                                const Gap(12),
                                 Text(
                                   '$label.',
                                   style: AppTextStyles.displayLarge,

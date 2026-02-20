@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:vasture/presentation/components/shimmer/shimmer_container.dart';
 
 import '../../../../domain/entities/sky_photo.dart';
@@ -99,17 +98,17 @@ class PhotoSwiper extends HookConsumerWidget {
               placeholder: (context, url) => const ShimmerContainer(),
               errorWidget: (context, url, error) => const ShimmerContainer(),
             ),
-            Positioned(
-              top: 16,
-              left: 16,
-              child: IconButton(
-                highlightColor: Colors.transparent,
-                onPressed: () {
-                  // TODO: 通報機能をつける
-                },
-                icon: const Icon(LucideIcons.flag, color: Colors.white),
-              ),
-            ),
+            // TODO: 通報機能をつける
+            // Positioned(
+            //   top: 16,
+            //   left: 16,
+            //   child: IconButton(
+            //     highlightColor: Colors.transparent,
+            //     onPressed: () {
+            //     },
+            //     icon: const Icon(LucideIcons.flag, color: Colors.white),
+            //   ),
+            // ),
           ],
         ),
       ),
