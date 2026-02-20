@@ -7,4 +7,5 @@ abstract class UserRepository {
   Future<Either<Failure, User>> createUser(String id);
   Future<Either<Failure, String>> getLocalUserId();
   Future<Either<Failure, void>> saveLocalUserId(String id);
+  Future<Either<Failure, void>> deleteUserById(String id);
 }
